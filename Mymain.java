@@ -98,6 +98,14 @@ public class Mymain {
     }
 
     public static void BFS(String start,String end){
+        if (!map.containsKey(start)){//判断起点站是否存在
+            System.out.print("起点站不存在");
+            return;
+        }
+        if (!map.containsKey(end)){
+            System.out.print("终点站不存在");//判断终点站是否存在
+            return;
+        }
         for (String temp :map.keySet()){
             map.get(temp).setVisited(false);
             map.get(temp).setDistance(0);
@@ -125,11 +133,9 @@ public class Mymain {
 
     public static void PrintPath(String start,String end){
         if (!map.containsKey(start)){//判断起点站是否存在
-            System.out.print("起点站不存在");
             return;
         }
         if (!map.containsKey(end)){
-            System.out.print("终点站不存在");//判断终点站是否存在
             return;
         }
         if (start.equals(end)){
@@ -156,7 +162,7 @@ public class Mymain {
             }
             String temp1="";
             String temp2="";
-            for (String str1 : map.get(path.get(i)).getLine()){
+            for (String str1 : map.get(path.get(i)).getLine()){//本站与前一站的共同拥有的线路存在temp1中
                 int flag=0;
                 for (String str2 :map.get(path.get(i-1)).getLine()){
                     if (str1.equals(str2)){
@@ -168,7 +174,7 @@ public class Mymain {
                 if (flag==1)
                     break;
             }
-            for (String str1 : map.get(path.get(i)).getLine()){
+            for (String str1 : map.get(path.get(i)).getLine()){//后一站与本站的共同拥有的线路存在temp2中
                 int flag=0;
                 for (String str2 :map.get(path.get(i+1)).getLine()){
                     if (str1.equals(str2)){
@@ -180,7 +186,7 @@ public class Mymain {
                 if (flag==1)
                     break;
             }
-            if (!temp1.equals(temp2))
+            if (!temp1.equals(temp2))//若temp1和temp2两线路不同则本站为转乘站
                 map.get(path.get(i)).setIfchange(true);
         }//判断path中的换乘站
         System.out.println("共"+path.size()+"站");
