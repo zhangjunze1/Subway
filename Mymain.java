@@ -42,7 +42,7 @@ public class Mymain {
                         station1.setVisited(false);
                     }
 
-                    if (map.containsKey(stations[j + 1])) {
+                    if (map.containsKey(stations[j + 1])) {//map中已经有该站后面的站点拿出来处理
                         station2 = map.get(stations[j + 1]);
                         map.remove(stations[j + 1]);
                     } else {
@@ -60,8 +60,8 @@ public class Mymain {
 
                     station1.setPreStation(station1.getStationName());
                     station2.setPreStation(station2.getStationName());
-                    map.put(stations[j], station1);
-                    map.put(stations[j + 1], station2);
+                    map.put(stations[j], station1);//把station1重新放回map
+                    map.put(stations[j + 1], station2);//把station2重新放回map
                     if (!linex.getStations().contains(station1.getStationName())) {
                         linex.stationAdd(station1.getStationName());
                     }
@@ -69,7 +69,7 @@ public class Mymain {
                         linex.stationAdd(station2.getStationName());
                     }
                 }
-                LineSet.add(linex);
+                LineSet.add(linex);//把线路加入LineSet
             }
             br.close();
         }catch(Exception e){
@@ -98,14 +98,17 @@ public class Mymain {
     }
 
     public static void BFS(String start,String end){
+        int flagx = 0;
         if (!map.containsKey(start)){//判断起点站是否存在
-            System.out.print("起点站不存在");
-            return;
+            System.out.println("起点站不存在");
+            flagx = 1;
         }
         if (!map.containsKey(end)){
-            System.out.print("终点站不存在");//判断终点站是否存在
-            return;
+            System.out.println("终点站不存在");//判断终点站是否存在
+            flagx = 1;
         }
+        if (flagx==1)
+            return;
         for (String temp :map.keySet()){
             map.get(temp).setVisited(false);
             map.get(temp).setDistance(0);
